@@ -1,11 +1,11 @@
-<template lang="pug"> 
+<template lang="pug">
     div
-        h1 Home
+        h1 Movie
 </template>
 
 <script>
 export default {
-	name: 'Home',
+	name: 'Movie',
 };
 </script>
 
