@@ -23,6 +23,8 @@
 
 <script>
 import InputForm from '../components/InputForm.vue';
+import { loginUser as firebaseLogin } from '../firebase/firebase';
+import { mapActions } from 'vuex';
 
 const components = {
 	InputForm,
@@ -34,8 +36,9 @@ const data = () => ({
 });
 
 const methods = {
+	...mapActions('LoginForm', ['inputEmailAction']),
 	loginUser() {
-		console.log(this.email + '  ' + this.password);
+		firebaseLogin(this.email, this.password, this.inputEmailAction);
 	},
 	changePass(e) {
 		console.log(e);

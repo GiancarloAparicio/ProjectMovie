@@ -16,12 +16,18 @@ import NavBar from './partials/NavBar.vue';
 import Footer from './partials/Footer.vue';
 import { apiUrl } from './config/index';
 
+//Firebase
+import { startFirebase } from './firebase/firebase';
+
 export default {
 	name: 'App',
 	components: { NavBar, Footer },
 	data: () => ({
 		url: apiUrl,
 	}),
+	mounted() {
+		startFirebase();
+	},
 };
 </script>
 

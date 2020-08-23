@@ -7,9 +7,11 @@ import User from './modules/User';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
 	modules: {
 		LoginForm: LoginForm,
 		User: User,
 	},
 });
+
+export default store;
