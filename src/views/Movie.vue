@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        h1 Movie
+        h1 Moviedf
 </template>
 
 <script>

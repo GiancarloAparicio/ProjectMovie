@@ -2,7 +2,8 @@
 	<div>
 		<NavBar>
 			<router-link class="nav-link" to="/">Home</router-link>
-			<router-link class="nav-link" to="/movies">Movies</router-link>
+			<router-link class="nav-link" to="/movie">Movies</router-link>
+			<router-link class="nav-link" to="/login">Login</router-link>
 		</NavBar>
 
 		<router-view />
@@ -11,15 +12,15 @@
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue';
-import Footer from './components/Footer.vue';
-import { API_URL } from './config/index';
+import NavBar from './partials/NavBar.vue';
+import Footer from './partials/Footer.vue';
+import { apiUrl } from './config/index';
 
 export default {
 	name: 'App',
 	components: { NavBar, Footer },
 	data: () => ({
-		url: API_URL,
+		url: apiUrl,
 	}),
 };
 </script>

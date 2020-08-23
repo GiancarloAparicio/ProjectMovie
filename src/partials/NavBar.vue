@@ -14,16 +14,8 @@
 			<ul class="navbar-nav mr-auto">
 				<slot class="nav-item" />
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input
-					class="form-control mr-sm-2"
-					type="text"
-					placeholder="Search"
-				/>
-				<button class="btn btn-secondary " type="submit">
-					Search
-				</button>
-			</form>
+
+			<button class="btn btn-secondary">Register</button>
 		</div>
 	</nav>
 </template>

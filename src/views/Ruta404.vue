@@ -1,11 +1,12 @@
-<template lang="pug">
-div
-  h1 Home
+<template>
+	<div>
+		Perdido
+	</div>
 </template>
 
 <script>
 export default {
-	name: 'Home',
+	name: 'Ruta404',
 };
 </script>
 
