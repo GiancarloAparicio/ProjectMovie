@@ -1,31 +1,24 @@
 const LoginForm = {
-	namespace: true,
+	namespaced: true,
 	state: {
 		inputEmail: null,
 		inputPassword: null,
 		errors: null,
 	},
 	mutations: {
-		inputEmail: (state, payload) => {
-			state.inputEmail = payload;
+		changeLogin: (state, payload) => {
+			state = {
+				...state,
+				...payload
+			};
 		},
-		inputPassword: (state, payload) => {
-			state.inputPassword = payload;
-		},
-		errors: (state, payload) => {
-			state.errors = payload;
-		},
+
 	},
 	actions: {
-		inputEmailAction: (store, payload) => {
-			store.commit('inputEmail', payload);
+		changeLogin: (store, payload) => {
+			store.commit('changeLogin', payload);
 		},
-		inputPasswordAction: (store, payload) => {
-			store.commit('inputPassword', payload);
-		},
-		errorsAction: (store, payload) => {
-			store.commit('errors', payload);
-		},
+
 	},
 };
 

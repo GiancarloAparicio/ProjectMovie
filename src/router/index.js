@@ -3,29 +3,28 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-const routes = [
-	{
+const routes = [{
 		path: '*',
 		name: 'Ruta404',
 		component: () =>
-			import(/* webpackChunkName: "about" */ '../views/Ruta404.vue'),
+			import('../views/Ruta404.vue'),
 	},
 	{
 		path: '/',
 		name: 'Home',
-		component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+		component: () => import('../views/Home.vue'),
 	},
 	{
 		path: '/login',
 		name: 'Login',
 		component: () =>
-			import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+			import('../views/Login.vue'),
 	},
 	{
 		path: '/movie',
 		name: 'Movie',
 		component: () =>
-			import(/* webpackChunkName: "about" */ '../views/Movie.vue'),
+			import('../views/Movie.vue'),
 	},
 ];
 

@@ -1,15 +1,18 @@
 const User = {
-	namespace: true,
+	namespaced: true,
 	state: {
 		user: {},
 	},
 	mutations: {
-		user: (state, payload) => {
-			state.user = payload;
+		changeUser: (state, payload) => {
+			state.user = {
+				...state.user,
+				...payload
+			};
 		},
 	},
 	actions: {
-		userAction: (store, payload) => {
+		changeUser: (store, payload) => {
 			store.commit('user', payload);
 		},
 	},

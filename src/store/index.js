@@ -9,8 +9,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	modules: {
-		LoginForm: LoginForm,
-		User: User,
+		LoginForm,
+		User,
 	},
 });
 
