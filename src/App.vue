@@ -17,7 +17,9 @@ import Footer from "./partials/Footer.vue";
 import { apiUrl } from "./config/index";
 
 //Firebase
-import { startFirebase } from "./firebase/firebase";
+import { startFirebase, listener } from "./firebase/firebase";
+import { mapActions } from "vuex";
+import { CHANGE_USER } from "./store/types";
 
 export default {
   name: "App",
@@ -27,6 +29,10 @@ export default {
   }),
   mounted() {
     startFirebase();
+    listener(this.CHANGE_USER);
+  },
+  methods: {
+    ...mapActions("User", [CHANGE_USER]),
   },
 };
 </script>

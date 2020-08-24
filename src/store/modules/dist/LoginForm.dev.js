@@ -5,9 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var _types = require("../types");
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -16,18 +14,18 @@ var LoginForm = {
   state: {
     inputEmail: null,
     inputPassword: null,
-    errors: null
+    errorEmail: null,
+    errorPassword: null
   },
-  mutations: {
-    changeLogin: function changeLogin(state, payload) {
-      state = _objectSpread({}, state, {}, payload);
-    }
-  },
-  actions: {
-    changeLogin: function changeLogin(store, payload) {
-      store.commit('changeLogin', payload);
-    }
-  }
+  mutations: _defineProperty({}, _types.CHANGE_LOGIN, function (state, payload) {
+    state.inputEmail = payload.inputEmail || state.inputEmail;
+    state.inputPassword = payload.inputPassword || state.inputPassword;
+    state.errorEmail = payload.errorEmail || state.errorEmail;
+    state.errorPassword = payload.errorPassword || state.errorPassword;
+  }),
+  actions: _defineProperty({}, _types.CHANGE_LOGIN, function (store, payload) {
+    store.commit(_types.CHANGE_LOGIN, payload);
+  })
 };
 var _default = LoginForm;
 exports["default"] = _default;

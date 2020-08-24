@@ -1,22 +1,25 @@
+import {
+	CHANGE_LOGIN
+} from "../types"
 const LoginForm = {
 	namespaced: true,
 	state: {
 		inputEmail: null,
 		inputPassword: null,
-		errors: null,
+		errorEmail: null,
+		errorPassword: null,
 	},
 	mutations: {
-		changeLogin: (state, payload) => {
-			state = {
-				...state,
-				...payload
-			};
+		[CHANGE_LOGIN]: (state, payload) => {
+			state.inputEmail = payload.inputEmail || state.inputEmail
+			state.inputPassword = payload.inputPassword || state.inputPassword
+			state.errorEmail = payload.errorEmail || state.errorEmail
+			state.errorPassword = payload.errorPassword || state.errorPassword
 		},
-
 	},
 	actions: {
-		changeLogin: (store, payload) => {
-			store.commit('changeLogin', payload);
+		[CHANGE_LOGIN]: (store, payload) => {
+			store.commit(CHANGE_LOGIN, payload);
 		},
 
 	},

@@ -1,6 +1,5 @@
 <template>
-  <form class="container card" @submit.prevent="loginUser">
-    <legend>Login User:</legend>
+  <FormModal title="Register User:" @modalSubmit="submitForm" @modalCancel="cancelSubmit">
     <InputForm
       type="email"
       v-bind:status="inputEmail"
@@ -17,33 +16,31 @@
       label="Password"
       placeholder="Password"
     />
-
-    <div class="form-group mx-auto">
-      <button type="submit" class="btn btn-success">Enter</button>
-      <button type="reset" class="btn btn-danger m-3">Cancel</button>
-    </div>
-  </form>
+  </FormModal>
 </template>
 
 <script>
-import InputForm from "../components/InputForm.vue";
-import { loginUser as firebaseLogin } from "../firebase/firebase";
+import FormModal from "../components/FormModal";
+import InputForm from "../components/InputForm";
+
+//Firebase
+import { registerUser as registerFirebase } from "../firebase/firebase";
 import { mapActions, mapState } from "vuex";
-import { CHANGE_LOGIN } from "../store/types";
-
-const components = {
-  InputForm,
-};
-
+import { CHANGE_REGISTER } from "../store/types";
+import { statusFormAction } from "../store/actions";
 const data = () => ({
   email: "",
   password: "",
 });
 
 const methods = {
-  ...mapActions("LoginForm", [CHANGE_LOGIN]),
-  loginUser() {
-    firebaseLogin(this.email, this.password, this.CHANGE_LOGIN);
+  ...mapActions("RegisterForm", [CHANGE_REGISTER]),
+
+  submitForm() {
+    registerFirebase(this.email, this.password, this.CHANGE_REGISTER);
+  },
+  cancelSubmit() {
+    this.CHANGE_REGISTER(statusFormAction("reset-status"));
   },
   changePassword(value) {
     this.password = value;
@@ -54,7 +51,7 @@ const methods = {
 };
 
 const computed = {
-  ...mapState("LoginForm", [
+  ...mapState("RegisterForm", [
     "inputEmail",
     "inputPassword",
     "errorEmail",
@@ -62,11 +59,19 @@ const computed = {
   ]),
 };
 
+const components = {
+  FormModal,
+  InputForm,
+};
+
 export default {
-  name: "FormLogin",
   data: data,
-  computed: computed,
+  name: "FormRegister",
   components: components,
   methods: methods,
+  computed: computed,
 };
 </script>
+
+<style>
+</style>

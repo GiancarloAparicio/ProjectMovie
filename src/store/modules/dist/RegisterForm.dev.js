@@ -13,19 +13,21 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var User = {
+var RegisterForm = {
   namespaced: true,
   state: {
-    existsUser: false,
-    currentUser: {}
+    inputEmail: null,
+    inputPassword: null,
+    errorEmail: null,
+    errorPassword: null
   },
-  mutations: _defineProperty({}, _types.CHANGE_USER, function (state, payload) {
-    state.existsUser = payload.existsUser;
-    state.currentUser = _objectSpread({}, state.currentUser, {}, payload.currentUser);
+  mutations: _defineProperty({}, _types.CHANGE_REGISTER, function (state, payload) {
+    state = _objectSpread({}, state, {}, payload);
+    console.log(RegisterForm);
   }),
-  actions: _defineProperty({}, _types.CHANGE_USER, function (store, payload) {
-    store.commit(_types.CHANGE_USER, payload);
+  actions: _defineProperty({}, _types.CHANGE_REGISTER, function (store, payload) {
+    store.commit(_types.CHANGE_REGISTER, payload);
   })
 };
-var _default = User;
+var _default = RegisterForm;
 exports["default"] = _default;

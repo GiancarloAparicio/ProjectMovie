@@ -1,19 +1,26 @@
+import {
+	CHANGE_USER
+} from "../types"
+
 const User = {
 	namespaced: true,
 	state: {
-		user: {},
+		existsUser: false,
+		currentUser: {},
 	},
 	mutations: {
-		changeUser: (state, payload) => {
-			state.user = {
-				...state.user,
-				...payload
+		[CHANGE_USER]: (state, payload) => {
+			state.existsUser = payload.existsUser
+			state.currentUser = {
+				...state.currentUser,
+				...payload.currentUser
 			};
 		},
+
 	},
 	actions: {
-		changeUser: (store, payload) => {
-			store.commit('user', payload);
+		[CHANGE_USER]: (store, payload) => {
+			store.commit(CHANGE_USER, payload);
 		},
 	},
 };
