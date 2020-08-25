@@ -25,10 +25,10 @@ export const statusFormAction = (status) => {
 
         case "reset-status":
             return ({
-                inputEmail: "",
-                inputPassword: "",
-                errorEmail: "",
-                errorPassword: ""
+                inputEmail: null,
+                inputPassword: null,
+                errorEmail: null,
+                errorPassword: null
             })
 
         case "auth/email-already-in-use":
@@ -63,6 +63,6 @@ export const statusFormAction = (status) => {
  * @param { boolean}value
  */
 export const currentUserAction = (user) => ({
-    existsUser: user.exists,
-    currentUser: user.current
+    existsUser: user.existsUser,
+    currentUser: user.currentUser
 })

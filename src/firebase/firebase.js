@@ -1,3 +1,4 @@
+//Firebase
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import * as firebaseConfig from '../config/firebaseConfig';
@@ -5,7 +6,7 @@ import * as firebaseConfig from '../config/firebaseConfig';
 //Actions
 import {
 	statusFormAction,
-	currentUserAction
+	currentUserAction,
 } from "../store/actions"
 
 export const startFirebase = () => {
@@ -24,10 +25,9 @@ export const startFirebase = () => {
 
 
 /**
- * 
  * @param {string} email 
  * @param {string} password 
- * @param {function( payload:Action ) } dispatchRegister RegisterForm
+ * @param {function( payload:Action ) } dispatchRegister StatusForm.register
  */
 export const registerUser = (email, password, dispatchRegister) => {
 	firebase
@@ -35,10 +35,10 @@ export const registerUser = (email, password, dispatchRegister) => {
 		.createUserWithEmailAndPassword(email, password)
 		.then(() => {
 
-			//Reseteo del formulario
+			//Reseteo del formulario de Register
 			dispatchRegister(statusFormAction("reset-status"));
 
-			//Confirma cuenta de usuario
+			//Confirma el correo de la cuenta del usuario
 			confirmEmail();
 		})
 		.catch(function (error) {
@@ -51,14 +51,15 @@ export const registerUser = (email, password, dispatchRegister) => {
  * 
  * @param {string} email 
  * @param {string} password 
- * @param {function( payload:Action ) } dispatchLogin LoginForm
+ * @param {function( payload:Action ) } dispatchLogin  StatusForm.login
  */
 export const loginUser = (email, password, dispatchLogin) => {
 	firebase
 		.auth()
 		.signInWithEmailAndPassword(email, password)
 		.then(() => {
-			console.log(dispatchLogin)
+			//Reseteo del formulario de Login
+			dispatchLogin(statusFormAction("reset-status"));
 		})
 		.catch((error) => {
 
@@ -68,18 +69,22 @@ export const loginUser = (email, password, dispatchLogin) => {
 };
 
 /**
- * 
- * @param {function( payload:Action )} dispatchUser User
+ * Observer for Firebase, to update the status
+ * @param {function( payload:Action )} dispatchUser UserAction
  */
 export const listener = (dispatchUser) => {
 	firebase.auth().onAuthStateChanged((user) => {
-		if (user) {
-			console.log(dispatchUser, currentUserAction)
-			//dispatchUser(currentUserAction(user));
-		}
+
+		dispatchUser(currentUserAction({
+			existsUser: user ? true : false,
+			currentUser: user
+		}));
 	});
 };
 
+/**
+ * Send a message to validate your E-mail account
+ */
 export const confirmEmail = () => {
 	firebase
 		.auth()
@@ -87,25 +92,27 @@ export const confirmEmail = () => {
 		.then(() => {
 
 			//Cerrando el modal de registro
-			let closeModalRegister = document.querySelector('#closeRegister');
-			let restModalRegister = document.querySelector('#resetRegister');
-			closeModalRegister.click();
-			restModalRegister.click();
-
-			//Actualizar el state
-			localStorage['SESSION'] = 'true';
+			document.querySelector('#closeRegister').click();
+			document.querySelector('#resetRegister').click();
 		})
 		.catch((error) => {
 			console.warn(error.code)
 		});
 };
 
-export const closeUser = () => {
+/**
+ * Function in charge of closing the session of Firebase
+ * @param {function( payload:Action )} dispatchUser  UserAction
+ */
+export const closeUser = (dispatchUser) => {
 	firebase
 		.auth()
 		.signOut()
 		.then(() => {
-			// dispatch(existscurrentUserAction(false));
+			dispatchUser(currentUserAction({
+				existsUser: false,
+				currentUser: null
+			}));
 		})
 		.catch(function (error) {
 			console.warn(error);

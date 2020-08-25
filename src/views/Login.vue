@@ -1,19 +1,19 @@
 <template>
   <div class="mt-5 mx-auto row container">
     <div class="col-md-6 mx-auto">
-      <FormLogin />
+      <LoginForm />
     </div>
-    <FormRegister />
+    <RegisterForm />
   </div>
 </template>
 
 <script>
-import FormLogin from "../partials/FormLogin";
-import FormRegister from "../partials/FormRegister";
+import LoginForm from "../partials/LoginForm";
+import RegisterForm from "../partials/RegisterForm";
 
 export default {
   name: "Login",
-  components: { FormLogin, FormRegister },
+  components: { LoginForm, RegisterForm },
 };
 </script>
 

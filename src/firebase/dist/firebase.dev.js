@@ -21,6 +21,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+//Firebase
 //Actions
 var startFirebase = function startFirebase() {
   var config = {
@@ -36,10 +37,9 @@ var startFirebase = function startFirebase() {
   _app["default"].initializeApp(config);
 };
 /**
- * 
  * @param {string} email 
  * @param {string} password 
- * @param {function( payload:Action ) } dispatchRegister RegisterForm
+ * @param {function( payload:Action ) } dispatchRegister StatusForm.register
  */
 
 
@@ -47,8 +47,8 @@ exports.startFirebase = startFirebase;
 
 var registerUser = function registerUser(email, password, dispatchRegister) {
   _app["default"].auth().createUserWithEmailAndPassword(email, password).then(function () {
-    //Reseteo del formulario
-    dispatchRegister((0, _actions.statusFormAction)("reset-status")); //Confirma cuenta de usuario
+    //Reseteo del formulario de Register
+    dispatchRegister((0, _actions.statusFormAction)("reset-status")); //Confirma el correo de la cuenta del usuario
 
     confirmEmail();
   })["catch"](function (error) {
@@ -60,7 +60,7 @@ var registerUser = function registerUser(email, password, dispatchRegister) {
  * 
  * @param {string} email 
  * @param {string} password 
- * @param {function( payload:Action ) } dispatchLogin LoginForm
+ * @param {function( payload:Action ) } dispatchLogin  StatusForm.login
  */
 
 
@@ -68,15 +68,16 @@ exports.registerUser = registerUser;
 
 var loginUser = function loginUser(email, password, dispatchLogin) {
   _app["default"].auth().signInWithEmailAndPassword(email, password).then(function () {
-    console.log(dispatchLogin);
+    //Reseteo del formulario de Login
+    dispatchLogin((0, _actions.statusFormAction)("reset-status"));
   })["catch"](function (error) {
     console.warn(error.message);
     dispatchLogin((0, _actions.statusFormAction)(error.code));
   });
 };
 /**
- * 
- * @param {function( payload:Action )} dispatchUser User
+ * Observer for Firebase, to update the status
+ * @param {function( payload:Action )} dispatchUser UserAction
  */
 
 
@@ -84,32 +85,42 @@ exports.loginUser = loginUser;
 
 var listener = function listener(dispatchUser) {
   _app["default"].auth().onAuthStateChanged(function (user) {
-    if (user) {
-      console.log(dispatchUser, _actions.currentUserAction); //dispatchUser(currentUserAction(user));
-    }
+    dispatchUser((0, _actions.currentUserAction)({
+      existsUser: user ? true : false,
+      currentUser: user
+    }));
   });
 };
+/**
+ * Send a message to validate your E-mail account
+ */
+
 
 exports.listener = listener;
 
 var confirmEmail = function confirmEmail() {
   _app["default"].auth().currentUser.sendEmailVerification().then(function () {
     //Cerrando el modal de registro
-    var closeModalRegister = document.querySelector('#closeRegister');
-    var restModalRegister = document.querySelector('#resetRegister');
-    closeModalRegister.click();
-    restModalRegister.click(); //Actualizar el state
-
-    localStorage['SESSION'] = 'true';
+    document.querySelector('#closeRegister').click();
+    document.querySelector('#resetRegister').click();
   })["catch"](function (error) {
     console.warn(error.code);
   });
 };
+/**
+ * Function in charge of closing the session of Firebase
+ * @param {function( payload:Action )} dispatchUser  UserAction
+ */
+
 
 exports.confirmEmail = confirmEmail;
 
-var closeUser = function closeUser() {
-  _app["default"].auth().signOut().then(function () {// dispatch(existscurrentUserAction(false));
+var closeUser = function closeUser(dispatchUser) {
+  _app["default"].auth().signOut().then(function () {
+    dispatchUser((0, _actions.currentUserAction)({
+      existsUser: false,
+      currentUser: null
+    }));
   })["catch"](function (error) {
     console.warn(error);
   });

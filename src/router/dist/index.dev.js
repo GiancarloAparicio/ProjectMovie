@@ -9,6 +9,8 @@ var _vue = _interopRequireDefault(require("vue"));
 
 var _vueRouter = _interopRequireDefault(require("vue-router"));
 
+var _index = _interopRequireDefault(require("../store/index"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -56,6 +58,16 @@ var router = new _vueRouter["default"]({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: routes
+});
+router.beforeEach(function (to, from, next) {
+  if (!_index["default"].state.User.existsUser) {
+    next();
+  }
+
+  console.log(from);
+  console.log(to);
+  console.log(_index["default"].state.User.existsUser);
+  next();
 });
 var _default = router;
 exports["default"] = _default;

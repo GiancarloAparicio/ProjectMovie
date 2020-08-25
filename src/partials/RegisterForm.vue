@@ -2,8 +2,8 @@
   <FormModal title="Register User:" @modalSubmit="submitForm" @modalCancel="cancelSubmit">
     <InputForm
       type="email"
-      v-bind:status="inputEmail"
-      v-bind:messageStatus="errorEmail"
+      v-bind:status="register.inputEmail"
+      v-bind:messageStatus="register.errorEmail"
       @value="changeEmail"
       label="Email"
       placeholder="Enter email"
@@ -11,8 +11,8 @@
     <InputForm
       type="password"
       @value="changePassword"
-      v-bind:status="inputPassword"
-      v-bind:messageStatus="errorPassword"
+      v-bind:status="register.inputPassword"
+      v-bind:messageStatus="register.errorPassword"
       label="Password"
       placeholder="Password"
     />
@@ -20,21 +20,25 @@
 </template>
 
 <script>
+//Components
 import FormModal from "../components/FormModal";
 import InputForm from "../components/InputForm";
 
 //Firebase
 import { registerUser as registerFirebase } from "../firebase/firebase";
+
+//Vuex
 import { mapActions, mapState } from "vuex";
 import { CHANGE_REGISTER } from "../store/types";
 import { statusFormAction } from "../store/actions";
+
 const data = () => ({
   email: "",
   password: "",
 });
 
 const methods = {
-  ...mapActions("RegisterForm", [CHANGE_REGISTER]),
+  ...mapActions("StatusForm", [CHANGE_REGISTER]),
 
   submitForm() {
     registerFirebase(this.email, this.password, this.CHANGE_REGISTER);
@@ -51,12 +55,7 @@ const methods = {
 };
 
 const computed = {
-  ...mapState("RegisterForm", [
-    "inputEmail",
-    "inputPassword",
-    "errorEmail",
-    "errorPassword",
-  ]),
+  ...mapState("StatusForm", ["register"]),
 };
 
 const components = {
@@ -66,7 +65,7 @@ const components = {
 
 export default {
   data: data,
-  name: "FormRegister",
+  name: "RegisterForm",
   components: components,
   methods: methods,
   computed: computed,

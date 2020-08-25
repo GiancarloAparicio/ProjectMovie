@@ -1,5 +1,9 @@
+//Router
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+//Vuex
+import store from "../store/index"
 
 Vue.use(VueRouter);
 
@@ -33,5 +37,19 @@ const router = new VueRouter({
 	base: process.env.BASE_URL,
 	routes,
 });
+
+router.beforeEach((to, from, next) => {
+
+	if (!store.state.User.existsUser) {
+		next()
+	}
+
+	console.log(from)
+	console.log(to)
+
+	console.log(store.state.User.existsUser)
+	next()
+})
+
 
 export default router;

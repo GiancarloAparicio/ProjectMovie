@@ -9,9 +9,7 @@ var _vue = _interopRequireDefault(require("vue"));
 
 var _vuex = _interopRequireDefault(require("vuex"));
 
-var _LoginForm = _interopRequireDefault(require("./modules/LoginForm"));
-
-var _RegisterForm = _interopRequireDefault(require("./modules/RegisterForm"));
+var _StatusForm = _interopRequireDefault(require("./modules/StatusForm"));
 
 var _User = _interopRequireDefault(require("./modules/User"));
 
@@ -22,8 +20,7 @@ _vue["default"].use(_vuex["default"]);
 
 var store = new _vuex["default"].Store({
   modules: {
-    RegisterForm: _RegisterForm["default"],
-    LoginForm: _LoginForm["default"],
+    StatusForm: _StatusForm["default"],
     User: _User["default"]
   }
 });

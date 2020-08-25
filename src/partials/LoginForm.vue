@@ -3,8 +3,8 @@
     <legend>Login User:</legend>
     <InputForm
       type="email"
-      v-bind:status="inputEmail"
-      v-bind:messageStatus="errorEmail"
+      v-bind:status="login.inputEmail"
+      v-bind:messageStatus="login.errorEmail"
       @value="changeEmail"
       label="Email"
       placeholder="Enter email"
@@ -12,24 +12,30 @@
     <InputForm
       type="password"
       @value="changePassword"
-      v-bind:status="inputPassword"
-      v-bind:messageStatus="errorPassword"
+      v-bind:status="login.inputPassword"
+      v-bind:messageStatus="login.errorPassword"
       label="Password"
       placeholder="Password"
     />
 
     <div class="form-group mx-auto">
       <button type="submit" class="btn btn-success">Enter</button>
-      <button type="reset" class="btn btn-danger m-3">Cancel</button>
+      <button type="reset" @click="cancelLogin" class="btn btn-danger m-3">Cancel</button>
     </div>
   </form>
 </template>
 
 <script>
+//Components
 import InputForm from "../components/InputForm.vue";
+
+//Firebase
 import { loginUser as firebaseLogin } from "../firebase/firebase";
+
+//Vuex
 import { mapActions, mapState } from "vuex";
 import { CHANGE_LOGIN } from "../store/types";
+import { statusFormAction } from "../store/actions";
 
 const components = {
   InputForm,
@@ -41,7 +47,7 @@ const data = () => ({
 });
 
 const methods = {
-  ...mapActions("LoginForm", [CHANGE_LOGIN]),
+  ...mapActions("StatusForm", [CHANGE_LOGIN]),
   loginUser() {
     firebaseLogin(this.email, this.password, this.CHANGE_LOGIN);
   },
@@ -51,19 +57,17 @@ const methods = {
   changeEmail(value) {
     this.email = value;
   },
+  cancelLogin() {
+    this.CHANGE_LOGIN(statusFormAction("reset-status"));
+  },
 };
 
 const computed = {
-  ...mapState("LoginForm", [
-    "inputEmail",
-    "inputPassword",
-    "errorEmail",
-    "errorPassword",
-  ]),
+  ...mapState("StatusForm", ["login"]),
 };
 
 export default {
-  name: "FormLogin",
+  name: "LoginForm",
   data: data,
   computed: computed,
   components: components,

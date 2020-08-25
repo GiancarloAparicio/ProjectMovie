@@ -32,10 +32,10 @@ var statusFormAction = function statusFormAction(status) {
 
     case "reset-status":
       return {
-        inputEmail: "",
-        inputPassword: "",
-        errorEmail: "",
-        errorPassword: ""
+        inputEmail: null,
+        inputPassword: null,
+        errorEmail: null,
+        errorPassword: null
       };
 
     case "auth/email-already-in-use":
@@ -74,8 +74,8 @@ exports.statusFormAction = statusFormAction;
 
 var currentUserAction = function currentUserAction(user) {
   return {
-    existsUser: user.exists,
-    currentUser: user.current
+    existsUser: user.existsUser,
+    currentUser: user.currentUser
   };
 };
 

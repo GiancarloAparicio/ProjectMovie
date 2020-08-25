@@ -18,13 +18,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var StatusForm = {
   namespaced: true,
   state: {
-    registerForm: {
+    register: {
       inputEmail: null,
       inputPassword: null,
       errorEmail: null,
       errorPassword: null
     },
-    loginForm: {
+    login: {
       inputEmail: null,
       inputPassword: null,
       errorEmail: null,
@@ -32,9 +32,9 @@ var StatusForm = {
     }
   },
   mutations: (_mutations = {}, _defineProperty(_mutations, _types.CHANGE_REGISTER, function (state, payload) {
-    state.registerForm = _objectSpread({}, state.registerForm, {}, payload);
+    state.register = _objectSpread({}, state.register, {}, payload);
   }), _defineProperty(_mutations, _types.CHANGE_LOGIN, function (state, payload) {
-    state.loginForm = _objectSpread({}, state.loginForm, {}, payload);
+    state.login = _objectSpread({}, state.login, {}, payload);
   }), _mutations),
   actions: (_actions = {}, _defineProperty(_actions, _types.CHANGE_REGISTER, function (store, payload) {
     store.commit(_types.CHANGE_REGISTER, payload);
