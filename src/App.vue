@@ -1,9 +1,9 @@
 <template>
   <div>
-    <NavBar>
-      <router-link class="nav-link" to="/">Home</router-link>
-      <router-link class="nav-link" to="/movie">Movies</router-link>
-      <router-link class="nav-link" to="/login">Login</router-link>
+    <NavBar v-bind:existsUser="existsUser">
+      <router-link v-if="existsUser" class="nav-link" to="/">Home</router-link>
+      <router-link v-if="existsUser" class="nav-link" to="/movie">Movies</router-link>
+      <router-link v-if="!existsUser" class="nav-link" to="/login">Login</router-link>
     </NavBar>
 
     <router-view />
@@ -21,7 +21,7 @@ import { apiUrl } from "./config/index";
 import { startFirebase, listener } from "./firebase/firebase";
 
 //Vuex
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { CHANGE_USER } from "./store/types";
 
 const data = () => ({
@@ -36,11 +36,16 @@ const methods = {
   ...mapActions("User", [CHANGE_USER]),
 };
 
+const computed = {
+  ...mapState("User", ["existsUser"]),
+};
+
 export default {
   name: "App",
   components: components,
   data: data,
   methods: methods,
+  computed,
   created() {
     startFirebase();
     listener(this.CHANGE_USER);

@@ -17,6 +17,7 @@
       </ul>
 
       <button
+        v-if="!existsUser"
         class="btn btn-secondary"
         data-toggle="modal"
         data-target="#ModalFormRegister"
@@ -26,8 +27,16 @@
 </template>
 
 <script>
+const props = {
+  existsUser: {
+    type: Boolean,
+    default: false,
+  },
+};
+
 export default {
   name: "NavBar",
+  props,
 };
 </script>
 

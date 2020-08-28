@@ -8,13 +8,17 @@
 </template>
 
 <script>
+//Components
 import LoginForm from "../partials/LoginForm";
 import RegisterForm from "../partials/RegisterForm";
 
+const components = () => {
+  LoginForm, RegisterForm;
+};
+
 export default {
   name: "Login",
-  components: { LoginForm, RegisterForm },
+  components,
 };
 </script>
 
-<style></style>

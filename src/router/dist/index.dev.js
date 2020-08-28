@@ -9,65 +9,38 @@ var _vue = _interopRequireDefault(require("vue"));
 
 var _vueRouter = _interopRequireDefault(require("vue-router"));
 
+var _routes = _interopRequireDefault(require("./routes"));
+
 var _index = _interopRequireDefault(require("../store/index"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
+//Router
+//Routes
+//Vuex
 _vue["default"].use(_vueRouter["default"]);
 
-var routes = [{
-  path: '*',
-  name: 'Ruta404',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/Ruta404.vue'));
-    });
-  }
-}, {
-  path: '/',
-  name: 'Home',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/Home.vue'));
-    });
-  }
-}, {
-  path: '/login',
-  name: 'Login',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/Login.vue'));
-    });
-  }
-}, {
-  path: '/movie',
-  name: 'Movie',
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/Movie.vue'));
-    });
-  }
-}];
 var router = new _vueRouter["default"]({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: routes
+  routes: _routes["default"],
+  scrollBehavior: function scrollBehavior() {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
 });
 router.beforeEach(function (to, from, next) {
-  if (!_index["default"].state.User.existsUser) {
+  if (!_index["default"].state.User.existsUser && !to.matched.some(function (record) {
+    return record.meta["public"];
+  })) {
+    next({
+      name: 'login'
+    });
+  } else {
     next();
   }
-
-  console.log(from);
-  console.log(to);
-  console.log(_index["default"].state.User.existsUser);
-  next();
 });
 var _default = router;
 exports["default"] = _default;
