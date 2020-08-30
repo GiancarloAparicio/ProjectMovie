@@ -16,7 +16,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var User = {
   namespaced: true,
   state: {
-    existsUser: false,
+    existsUser: localStorage.getItem('existsUser') || false,
     currentUser: {}
   },
   mutations: _defineProperty({}, _types.CHANGE_USER, function (state, payload) {

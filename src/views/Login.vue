@@ -4,6 +4,7 @@
       <LoginForm />
     </div>
     <RegisterForm />
+    {{existsUser}}
   </div>
 </template>
 
@@ -12,13 +13,35 @@
 import LoginForm from "../partials/LoginForm";
 import RegisterForm from "../partials/RegisterForm";
 
-const components = () => {
-  LoginForm, RegisterForm;
+//Vuex
+import { mapState } from "vuex";
+
+const components = {
+  LoginForm,
+  RegisterForm,
+};
+
+const computed = {
+  ...mapState("User", ["existsUser"]),
+  user() {
+    console.log(this.$store.state.User.existsUser);
+  },
+};
+
+const watch = {
+  existsUser() {
+    if (this.existsUser) {
+      this.$router.replace({ name: "home" });
+    }
+    return this.existsUser;
+  },
 };
 
 export default {
   name: "Login",
   components,
+  computed,
+  watch,
 };
 </script>
 

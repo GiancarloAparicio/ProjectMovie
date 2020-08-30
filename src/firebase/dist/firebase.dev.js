@@ -85,6 +85,9 @@ exports.loginUser = loginUser;
 
 var listener = function listener(dispatchUser) {
   _app["default"].auth().onAuthStateChanged(function (user) {
+    //Usamos el localStorage solo para adelantar la carga
+    localStorage.setItem('existsUser', true); //Actualizamos el state del User
+
     dispatchUser((0, _actions.currentUserAction)({
       existsUser: user ? true : false,
       currentUser: user
@@ -117,6 +120,9 @@ exports.confirmEmail = confirmEmail;
 
 var closeUser = function closeUser(dispatchUser) {
   _app["default"].auth().signOut().then(function () {
+    //Usamos el localStorage solo para adelantar la carga
+    localStorage.setItem('existsUser', false); //Actualizamos el state del User
+
     dispatchUser((0, _actions.currentUserAction)({
       existsUser: false,
       currentUser: null
