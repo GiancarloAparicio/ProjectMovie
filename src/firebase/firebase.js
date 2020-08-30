@@ -74,14 +74,17 @@ export const loginUser = (email, password, dispatchLogin) => {
  */
 export const listener = (dispatchUser) => {
 	firebase.auth().onAuthStateChanged((user) => {
+
 		//Usamos el localStorage solo para adelantar la carga
-		localStorage.setItem('existsUser', true);
+		localStorage.setItem('existsUser', user ? true : false);
 
 		//Actualizamos el state del User
 		dispatchUser(currentUserAction({
 			existsUser: user ? true : false,
 			currentUser: user
 		}));
+
+
 	});
 };
 

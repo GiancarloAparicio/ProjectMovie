@@ -86,7 +86,7 @@ exports.loginUser = loginUser;
 var listener = function listener(dispatchUser) {
   _app["default"].auth().onAuthStateChanged(function (user) {
     //Usamos el localStorage solo para adelantar la carga
-    localStorage.setItem('existsUser', true); //Actualizamos el state del User
+    localStorage.setItem('existsUser', user ? true : false); //Actualizamos el state del User
 
     dispatchUser((0, _actions.currentUserAction)({
       existsUser: user ? true : false,

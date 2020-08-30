@@ -5,8 +5,11 @@ import VueRouter from 'vue-router';
 //Routes
 import routes from "./routes"
 
-//Vuex
-import store from "../store/index"
+//Guards
+import {
+	beforeEnter
+} from './guards/guardsGlobal';
+
 
 Vue.use(VueRouter);
 
@@ -22,16 +25,7 @@ const router = new VueRouter({
 	},
 });
 
-router.beforeEach((to, from, next) => {
-
-	if (!store.state.User.existsUser && !to.matched.some(record => record.meta.public)) {
-		next({
-			name: 'login'
-		})
-	} else {
-		next()
-	}
-})
+router.beforeEach(beforeEnter)
 
 
 export default router;
