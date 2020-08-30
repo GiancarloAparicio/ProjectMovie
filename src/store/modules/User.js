@@ -1,7 +1,12 @@
+//Types Actions
 import {
 	CHANGE_USER
 } from "../types"
 
+//Helpers
+import {
+	stringToBoolean
+} from "../../helpers/helpers"
 
 /**
  *  existsUser: Depende del localStorage para cargar rapido la pagina, si se modifica no  
@@ -11,7 +16,7 @@ import {
 const User = {
 	namespaced: true,
 	state: {
-		existsUser: localStorage.getItem('existsUser') || false,
+		existsUser: stringToBoolean(localStorage.getItem('existsUser')) || false,
 		currentUser: {},
 	},
 	mutations: {
@@ -29,6 +34,13 @@ const User = {
 			store.commit(CHANGE_USER, payload);
 		},
 	},
+	getters: {
+		getUserExists: (state) => {
+			return stringToBoolean(state.currentUser?.email)
+		}
+	}
 };
+
+
 
 export default User;

@@ -5,9 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _index = _interopRequireDefault(require("../store/index"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _guardsRouter = require("./guards/guardsRouter");
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -15,7 +13,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var routes = [{
+var ruta404 = {
   path: '*',
   name: 'ruta404',
   meta: {
@@ -26,9 +24,11 @@ var routes = [{
       return _interopRequireWildcard(require('../views/Ruta404.vue'));
     });
   }
-}, {
+};
+var home = {
   path: '/',
   name: 'home',
+  beforeEnter: _guardsRouter.beforeEnterHome,
   meta: {
     "public": false
   },
@@ -37,27 +37,21 @@ var routes = [{
       return _interopRequireWildcard(require('../views/Home.vue'));
     });
   }
-}, {
+};
+var login = {
   path: '/login',
   name: 'login',
   meta: {
     "public": true
   },
-  beforeEnter: function beforeEnter(to, from, next) {
-    if (_index["default"].state.User.existsUser) {
-      next({
-        name: 'home'
-      });
-    } else {
-      next();
-    }
-  },
+  beforeEnter: _guardsRouter.beforeEnterLogin,
   component: function component() {
     return Promise.resolve().then(function () {
       return _interopRequireWildcard(require('../views/Login.vue'));
     });
   }
-}, {
+};
+var movie = {
   path: '/movie',
   name: 'movie',
   meta: {
@@ -68,6 +62,6 @@ var routes = [{
       return _interopRequireWildcard(require('../views/Movie.vue'));
     });
   }
-}];
-var _default = routes;
+};
+var _default = [ruta404, home, login, movie];
 exports["default"] = _default;

@@ -5,13 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.beforeEnterLogin = void 0;
 
-var _index = _interopRequireDefault(require("../../store/index"));
+var _index = _interopRequireDefault(require("../store/index"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 //Vuex
 var beforeEnterLogin = function beforeEnterLogin(to, from, next) {
-  if (_index["default"].state.User.existsUser && _index["default"].state.User.currentUser) {
+  if (_index["default"].state.User.existsUser) {
     next({
       name: 'home'
     });
