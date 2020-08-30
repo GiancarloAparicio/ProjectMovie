@@ -26,6 +26,4 @@ const router = new VueRouter({
 });
 
 router.beforeEach(beforeEnter)
-
-
 export default router;
