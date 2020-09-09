@@ -7,6 +7,11 @@
       v-bind:currentPage="currentPage"
       @changePage="changePage"
     />
+    <div
+      v-if="!movie"
+      class="alert alert-info p-4 w-75 mx-auto"
+      role="alert"
+    >Find your favorite movie ... :)</div>
   </div>
 </template>
 
