@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 // Modules
-import StatusForm from "./modules/StatusForm"
+import StatusForm from './modules/StatusForm';
 import User from './modules/User';
 
 Vue.use(Vuex);
