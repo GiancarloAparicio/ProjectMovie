@@ -4,7 +4,8 @@
     <MoviesLists
       v-bind:movies="movies.Search"
       v-bind:totalMovies="movies.totalResults"
-      v-bind:index="index"
+      v-bind:currentPage="currentPage"
+      @changePage="changePage"
     />
   </div>
 </template>
@@ -19,21 +20,27 @@ import { apiUrl } from "../config/index";
 const data = () => ({
   movies: {},
   errors: {},
-  index: 1,
+  currentPage: 1,
+  movie: "",
 });
 
 const methods = {
   consultApi(movie) {
     // &t=title para tener todos los datos
-    fetch(`${apiUrl}&s=${movie}&page=${this.index}&plot=full`)
+    fetch(`${apiUrl}&s=${movie}&page=${this.currentPage}&plot=full`)
       .then((res) => res.json())
       .then((data) => {
+        this.movie = movie;
         this.errors = data.Response ? null : data;
         this.movies = data.Response ? data : null;
       })
       .catch((error) => {
         console.log(error);
       });
+  },
+  changePage(page) {
+    this.currentPage = page;
+    this.consultApi(this.movie);
   },
 };
 

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <h1 class="navbar-brand">Movies</h1>
     <button
       class="navbar-toggler"

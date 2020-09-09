@@ -8,10 +8,11 @@
         </a>
       </li>
       <li
+        @click="changePage(pos)"
         :key="pos"
         v-for="(pos) in totalPages"
         class="page-item"
-        v-bind:class="{ active: (index==pos), 'd-none': ( pos<min || max<pos)}"
+        v-bind:class="{ active: (currentPage==pos), 'd-none': ( pos<min || max<pos)}"
       >
         <a class="page-link">{{pos}}</a>
       </li>
@@ -32,7 +33,13 @@ const data = () => ({
   max: 1,
 });
 
-const props = ["pagination", "index"];
+const methods = {
+  changePage(pos) {
+    this.$emit("changePage", pos);
+  },
+};
+
+const props = ["pagination", "currentPage"];
 
 const watch = {
   pagination() {
@@ -51,6 +58,7 @@ const watch = {
 export default {
   name: "Pagination",
   data,
+  methods,
   props,
   watch,
 };

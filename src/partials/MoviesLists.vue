@@ -11,7 +11,11 @@
       <h5 class="text-center mt-3">{{movie.Year}}</h5>
     </div>
     <div class="col-md-12">
-      <Pagination v-bind:pagination="totalMovies" v-bind:index="index" />
+      <Pagination
+        v-bind:pagination="totalMovies"
+        @changePage="changePage"
+        v-bind:currentPage="currentPage"
+      />
     </div>
   </div>
 </template>
@@ -19,14 +23,26 @@
 <script>
 import Pagination from "../components/Pagination";
 
-const props = ["movies", "totalMovies", "index"];
+const props = ["movies", "totalMovies", "currentPage"];
 
 const components = {
   Pagination,
 };
 
+const methods = {
+  changePage(pos) {
+    this.$emit("changePage", pos);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  },
+};
+
 export default {
   name: "MoviesLists",
+  methods,
   props,
   components,
 };
