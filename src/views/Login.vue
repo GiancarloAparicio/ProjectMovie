@@ -26,7 +26,6 @@ const computed = {
 
 const watch = {
   existsUser() {
-    console.log(this.existsUser);
     if (this.existsUser) {
       this.$router.replace({ name: "home" });
     }
