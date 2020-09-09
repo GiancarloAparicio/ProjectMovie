@@ -1,12 +1,20 @@
 <template>
   <div>
+    <!-- Navegacion -->
     <NavBar v-bind:existsUser="existsUser">
       <router-link v-if="existsUser" class="nav-link" to="/">Home</router-link>
       <router-link v-if="existsUser" class="nav-link" to="/movie">Movies</router-link>
       <router-link v-if="!existsUser" class="nav-link" to="/login">Login</router-link>
     </NavBar>
 
-    <router-view />
+    <!-- Router -->
+    <div class="container mt-4">
+      <div class="row">
+        <router-view />
+      </div>
+    </div>
+
+    <!-- Footer-->
     <Footer />
   </div>
 </template>
