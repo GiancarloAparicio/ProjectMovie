@@ -4,10 +4,7 @@ import 'firebase/auth';
 import * as firebaseConfig from '../config/firebaseConfig';
 
 //Actions
-import {
-	statusFormAction,
-	currentUserAction,
-} from "../store/actions"
+import { statusFormAction, currentUserAction } from '../store/actions';
 
 export const startFirebase = () => {
 	const config = {
@@ -23,10 +20,9 @@ export const startFirebase = () => {
 	firebase.initializeApp(config);
 };
 
-
 /**
- * @param {string} email 
- * @param {string} password 
+ * @param {string} email
+ * @param {string} password
  * @param {function( payload:Action ) } dispatchRegister StatusForm.register
  */
 export const registerUser = (email, password, dispatchRegister) => {
@@ -34,23 +30,26 @@ export const registerUser = (email, password, dispatchRegister) => {
 		.auth()
 		.createUserWithEmailAndPassword(email, password)
 		.then(() => {
+			// Closing the registration modal
+			document.querySelector('#closeRegister').click();
+			document.querySelector('#resetRegister').click();
 
-			//Reseteo del formulario de Register
-			dispatchRegister(statusFormAction("reset-status"));
+			//Resetting the registration form
+			dispatchRegister(statusFormAction('reset-status'));
 
-			//Confirma el correo de la cuenta del usuario
+			//Confirm the email of the user's account
 			confirmEmail();
 		})
-		.catch(function (error) {
-			console.warn(error.code)
-			dispatchRegister(statusFormAction(error.code))
+		.catch(function(error) {
+			console.warn(error.code);
+			dispatchRegister(statusFormAction(error.code));
 		});
 };
 
 /**
- * 
- * @param {string} email 
- * @param {string} password 
+ *
+ * @param {string} email
+ * @param {string} password
  * @param {function( payload:Action ) } dispatchLogin  StatusForm.login
  */
 export const loginUser = (email, password, dispatchLogin) => {
@@ -58,13 +57,12 @@ export const loginUser = (email, password, dispatchLogin) => {
 		.auth()
 		.signInWithEmailAndPassword(email, password)
 		.then(() => {
-			//Reseteo del formulario de Login
-			dispatchLogin(statusFormAction("reset-status"));
+			//Resetting the Login form
+			dispatchLogin(statusFormAction('reset-status'));
 		})
 		.catch((error) => {
-
 			console.warn(error.message);
-			dispatchLogin(statusFormAction(error.code))
+			dispatchLogin(statusFormAction(error.code));
 		});
 };
 
@@ -74,17 +72,16 @@ export const loginUser = (email, password, dispatchLogin) => {
  */
 export const listener = (dispatchUser) => {
 	firebase.auth().onAuthStateChanged((user) => {
-
-		//Usamos el localStorage solo para adelantar la carga
+		// We use the localStorage only to advance the load
 		localStorage.setItem('existsUser', user ? true : false);
 
-		//Actualizamos el state del User
-		dispatchUser(currentUserAction({
-			existsUser: user ? true : false,
-			currentUser: user
-		}));
-
-
+		// We update the User's state
+		dispatchUser(
+			currentUserAction({
+				existsUser: user ? true : false,
+				currentUser: user,
+			})
+		);
 	});
 };
 
@@ -96,13 +93,10 @@ export const confirmEmail = () => {
 		.auth()
 		.currentUser.sendEmailVerification()
 		.then(() => {
-
-			//Cerrando el modal de registro
-			document.querySelector('#closeRegister').click();
-			document.querySelector('#resetRegister').click();
+			//
 		})
 		.catch((error) => {
-			console.warn(error.code)
+			console.warn(error.code);
 		});
 };
 
@@ -115,16 +109,18 @@ export const closeUser = (dispatchUser) => {
 		.auth()
 		.signOut()
 		.then(() => {
-			//Usamos el localStorage solo para adelantar la carga
+			// We use the localStorage only to advance the loading of the page
 			localStorage.setItem('existsUser', false);
 
-			//Actualizamos el state del User
-			dispatchUser(currentUserAction({
-				existsUser: false,
-				currentUser: null
-			}));
+			// We update the User's state
+			dispatchUser(
+				currentUserAction({
+					existsUser: false,
+					currentUser: null,
+				})
+			);
 		})
-		.catch(function (error) {
+		.catch(function(error) {
 			console.warn(error);
 		});
 };
